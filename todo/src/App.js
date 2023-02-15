@@ -17,10 +17,6 @@ export default class App extends Component {
     }
   }
 
-  updateNewTextValue = (event) => {
-    this.setState({ newItemText: event.target.value });
-}
-
   createNewTodo = (task) => {
     if (!this.state.todoItems.find(item => item.action === task)) {
       this.setState({
