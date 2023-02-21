@@ -9,13 +9,16 @@ export class ProductList extends Component {
         return this.props.products.map(p =>
             <div className="card m1 p1 bg-light" key={p.id}>
                 <h4>
-                    {p.name}
+                    { p.name }
                     <span className="badge badge-pill badge-primary float-right">
                         ${p.price.toFixed(2)}
                     </span>
                 </h4>
                 <div className="card-text bg-white p-1">
-                    {p.description}
+                    { p.description }
+                    <button className="btn btn-success btn-sm float-right" onClick={ () => this.props.addToCart(p) }>
+                        Add To Cart
+                    </button>
                 </div>
             </div>
         )
