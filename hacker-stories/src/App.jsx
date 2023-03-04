@@ -53,21 +53,14 @@ const Search = ({ search, onSearch }) => (
 
 const List = ({list}) => (
   <ul>
-    {list.map((item) => (
-      <Item key={item.objectID} item={item} />
+    {list.map(({objectID, ...item}) => ( // Rest operator is used to deconstruct the objectID from the rest of the item object
+      <Item key={item.objectID} {...item} /> /* Spread operator is used to spread the rest of the item's key/value pairs into the Item component.
+                                                In this solution the objectID is not passed to the Item component. */
     ))}
   </ul>
 )
 
-const Item = ({
-  item: {
-    title,
-    url,
-    author,
-    num_comments,
-    points
-  }
-}) => (
+const Item = ({title, url, author, num_comments, points}) => (
   <li>
     <span>
       <a href={url}>{title}</a>
