@@ -65,11 +65,10 @@ const Item = ({
     url,
     author,
     num_comments,
-    points,
-    objectID
+    points
   }
 }) => (
-  <li key={objectID}>
+  <li>
     <span>
       <a href={url}>{title}</a>
     </span>
