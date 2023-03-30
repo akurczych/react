@@ -65,15 +65,15 @@ const App = () => {
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
     try {
-    const result = await axios.get(url);
+      const result = await axios.get(url);
 
-    dispatchStories({
-      type: 'STORIES_FETCH_SUCCESS',
-      payload: result.data.hits,
-    });
-  } catch {
-    dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
-  }
+      dispatchStories({
+        type: 'STORIES_FETCH_SUCCESS',
+        payload: result.data.hits,
+      });
+    } catch {
+      dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
+    }
   }, [url]);
 
   React.useEffect(() => {
@@ -91,29 +91,20 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleSearchSubmit = () => {
-    setUrl(`${API_ENDPOINT}${searchTerm}`)
+  const handleSearchSubmit = (event) => {
+    setUrl(`${API_ENDPOINT}${searchTerm}`);
+    event.preventDefault();
   }
 
   return (
     <div>
       <h1>My Hacker Stories</h1>
 
-      <InputWithLabel
-        id="search"
-        label="Search"
-        value={searchTerm}
-        onInputChange={handleSearchInput}
+      <SearchForm
+        searchTerm={searchTerm}
+        onSearchInput={handleSearchInput}
+        onSearchSubmit={handleSearchSubmit}
       />
-
-      <button
-        type='button'
-        disabled={!searchTerm}
-        onClick={handleSearchSubmit}
-      >
-        Submit
-      </button>
-
       <hr />
 
       {stories.isError && <p>Something went wrong ...</p>}
@@ -164,6 +155,27 @@ const Item = ({ item, onRemoveItem }) => (
       <button type="button" onClick={() => onRemoveItem(item)}>Dismiss</button>
     </span>
   </li>
+);
+
+const SearchForm = ({
+  searchTerm,
+  onSearchInput,
+  onSearchSubmit,
+}) => (
+  <form onSubmit={onSearchSubmit}>
+    <InputWithLabel
+      id="search"
+      value={searchTerm}
+      onInputChange={onSearchInput}
+      label='Search:'
+    >
+      Search:
+    </InputWithLabel>
+
+    <button type='submit' disabled={!searchTerm}>
+      Submit
+    </button>
+  </form>
 );
 
 export default App;
